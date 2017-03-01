@@ -54,9 +54,9 @@ public class Solution {
                 shell.remove(shell.size() - 1);
             }
         }
-        for (ArrayList shell : shells) {
+        /*for (ArrayList shell : shells) {
             System.out.println(shell.toString());
-        }
+        }*/
 
         /* Now the lists are reassembled in their original format */
         int[][] outputArray = new int[numRows][];
@@ -114,13 +114,13 @@ public class Solution {
         } else if (shellIndex <= (bottomDistance + leftDistance)) {
             //cases from the left side
             int leftIndex =  shellIndex - bottomDistance;
-            coordinates[0] = numRows - 1 - leftIndex;
+            coordinates[0] = numRows - 1 - shellNum - leftIndex;
             coordinates[1] = shellNum;
         } else if (shellIndex <= (bottomDistance + leftDistance + topDistance)) {
             //cases from the top
             int topIndex = shellIndex - leftDistance - bottomDistance;
             coordinates[0] = shellNum;
-            coordinates[1] = topIndex;
+            coordinates[1] = shellNum + topIndex;
         } else {
             //cases from the right
             int rightIndex = shellIndex - leftDistance - bottomDistance - topDistance;
@@ -137,4 +137,11 @@ public class Solution {
 1 2 3 4
 1 2 3 4
 1 2 3 4
+
+
+4 4 5
+1 1 1 1
+2 2 2 2
+3 3 3 3
+4 4 4 4
  */
