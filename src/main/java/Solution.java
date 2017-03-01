@@ -2,6 +2,9 @@ package main.java;
 
 import java.util.*;
 
+/**
+ * Solution to <a href="https://www.hackerrank.com/challenges/matrix-rotation-algo">challenge</a>.
+ */
 public class Solution {
 
     public static void main(String[] args) {
@@ -26,7 +29,10 @@ public class Solution {
         | <---* #
         <-------*
 
-        starting at the stars and finishing at the pound signs
+        starting at the * and finishing at the #
+
+        The actual pattern starts from the top left corner and prepends numbers
+        on the left and bottom faces and appends all others as they are seen.
          */
         for (int rowNumber = 0; rowNumber < numRows; rowNumber++) {
             line = scanner.nextLine();
@@ -48,10 +54,10 @@ public class Solution {
         for (ArrayList shell : shells) {
             /* effective rotation denotes how far it would be rotated without counting full rotations*/
             int effectiveRotation = rotationAmount % shell.size();
-            List movedPortion = shell.subList((shell.size() - effectiveRotation), shell.size());
-            shell.addAll(0, movedPortion);
+            List movedPortion = shell.subList(0, effectiveRotation);
+            shell.addAll(movedPortion);
             for (int i = 0; i < effectiveRotation; i++) {
-                shell.remove(shell.size() - 1);
+                shell.remove(0);
             }
         }
         /*for (ArrayList shell : shells) {
@@ -60,7 +66,7 @@ public class Solution {
 
         /* Now the lists are reassembled in their original format */
         int[][] outputArray = new int[numRows][];
-        for (int i = 0; i < numColumns; i++) {
+        for (int i = 0; i < numRows; i++) {
             outputArray[i] = new int[numColumns];
         }
         for (int shellNum = 0; shellNum < shells.length; shellNum++) {
@@ -69,12 +75,18 @@ public class Solution {
                 outputArray[coordinates[0]][coordinates[1]] = shells[shellNum].get(shellIndex);
             }
         }
-        for (int[] row : outputArray) {
+        /*for (int[] row : outputArray) {
             System.out.println(Arrays.toString(row));
+        }*/
+
+
+//        System.out.println("And we're done.");
+        for (int[] row : outputArray) {
+            for (int val : row) {
+                System.out.print(Integer.toString(val) + " ");
+            }
+            System.out.print("\n");
         }
-
-
-        System.out.println("And we're done.");
     }
 
     /**
@@ -124,7 +136,7 @@ public class Solution {
         } else {
             //cases from the right
             int rightIndex = shellIndex - leftDistance - bottomDistance - topDistance;
-            coordinates[0] = rightIndex;
+            coordinates[0] = rightIndex + shellNum;
             coordinates[1] = numColumns - shellNum - 1;
         }
         return coordinates;
